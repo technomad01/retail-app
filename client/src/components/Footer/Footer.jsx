@@ -1,4 +1,10 @@
 import React from 'react'
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import image from "../../../public/payment1.png"
 import "./footer.scss";
 
 const Footer = () => {
@@ -6,26 +12,43 @@ const Footer = () => {
         <div className='footer'>
             <div className="top">
                 <div className="item">
-                    <h1>Categories</h1>
-                    <span>Clothes</span>
-                    <span>Shoes</span>
-                    <span>Aceesories</span>
-                    <span>Home Items</span>
+                    <h1>ABOUT US</h1>
+                    <span>About Us</span>
+                    <span>Partnerships</span>
+                    <span>Press</span>
+                    <span>Privacy Policy</span>
                 </div>
                 <div className="item">
-                    <h1>Links</h1>
-                    <span>FAQ</span>
-                    <span>Pages</span>
-                    <span>Stores</span>
-                    <span>Cookies</span>
+                    <h1>CUSTOMER SERVICE</h1>
+                    <span>Order Tracking</span>
+                    <span>Order Returns</span>
+                    <span>Refunds</span>
+                    <span>FAQs</span>
+                    <span>Delivery</span>
+                    <span>Payment Methods</span>
+                    <span>Returns</span>
+                    <span>Contact Us</span>
+
                 </div>
                 <div className="item">
-                    <h1>About</h1>
-                    <span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. </span>
+                    <h1>TOP SEARCHES</h1>
+                    <span>Women's Clothing</span>
+                    <span>Men's Clothing</span>
+                    <span>Men's Sneakers</span>
+                    <span>Women's Sneakers</span>
+                    <span>T-Shirt</span>
+                    <span>Makeup</span>
+                    <span>Women's Shoes</span>
                 </div>
                 <div className="item">
-                    <h1>Contact</h1>
-                    <span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. </span>
+                    <h1>TOP BRANDS</h1>
+                    <span>Apple</span>
+                    <span>Celine</span>
+                    <span>GAP</span>
+                    <span>Levis</span>
+                    <span>Marc Jacobs</span>
+                    <span>Nike</span>
+                    <span>Ralph Lauren</span>
                 </div>
             </div>
             <div className="bottom">
@@ -34,9 +57,16 @@ const Footer = () => {
                         <span>NOUVeau</span>
                     </div>
                     <span className='copyright'> © Copyright 2024. All Rights Reserved</span>
+                    <div className="icons">
+                        <FacebookIcon />
+                        <InstagramIcon />
+                        <TwitterIcon />
+                        <YouTubeIcon />
+                        <LinkedInIcon />
+                    </div>
                 </div>
                 <div className="right">
-                    <img src="client/public/payment.png" alt="" />
+                    <img src={image} alt="" />
 
                 </div>
             </div>

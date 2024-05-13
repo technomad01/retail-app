@@ -1,6 +1,8 @@
 .navbar {
-  height: 80px;
+  height: 60px;
+
   .wrapper {
+    margin-top: 0;
     padding: 10px 30px;
     display: flex;
     align-items: center;
@@ -8,25 +10,27 @@
     font-family: "Lato", sans-serif;
     font-weight: 300;
     font-style: normal;
-
-    .item {
-      display: flex;
-      align-items: center;
-      font-size: 18px;
-    }
+    background-color: black;
+    color: white;
 
     .left {
       display: flex;
       align-items: center;
       gap: 25px;
-    }
-    .center {
-      color: #ff8c00;
-      font-family: "Dancing Script", cursive;
-      font-optical-sizing: auto;
-      font-weight: 700;
-      font-style: normal;
-      font-size: 35px;
+
+      .brand {
+        color: #ff8c00;
+        font-family: "Dancing Script", cursive;
+        font-optical-sizing: auto;
+        font-weight: 700;
+        font-style: normal;
+        font-size: 35px;
+      }
+      .item {
+        display: flex;
+        align-items: center;
+        font-size: 18px;
+      }
     }
 
     .right {
