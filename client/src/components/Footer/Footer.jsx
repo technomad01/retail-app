@@ -4,7 +4,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import image from "../../../public/payment1.png"
+import image from "../../../public/payment.png"
 import "./footer.scss";
 
 const Footer = () => {
@@ -32,13 +32,13 @@ const Footer = () => {
                 </div>
                 <div className="item">
                     <h1>TOP SEARCHES</h1>
-                    <span>Women's Clothing</span>
-                    <span>Men's Clothing</span>
-                    <span>Men's Sneakers</span>
-                    <span>Women's Sneakers</span>
+                    <span>Womens Clothing</span>
+                    <span>Mens Clothing</span>
+                    <span>Mens Sneakers</span>
+                    <span>Womens Sneakers</span>
                     <span>T-Shirt</span>
                     <span>Makeup</span>
-                    <span>Women's Shoes</span>
+                    <span>Womens Shoes</span>
                 </div>
                 <div className="item">
                     <h1>TOP BRANDS</h1>

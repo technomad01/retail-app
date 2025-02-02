@@ -1,50 +1,66 @@
-import React from 'react'
+import React from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
-import "./cart.scss";
+import { useDispatch, useSelector } from 'react-redux';
+import { removeItem } from '../../redux/cartReducer';
+import './cart.scss';
+import.meta.env.VITE_API_URL
+import { loadStripe } from '@stripe/stripe-js';
+import { makeRequest } from "../../makeRequest"
 
-const data = [
-    {
-        id: 1,
-        img: "https://images.pexels.com/photos/1135531/pexels-photo-1135531.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-        title: "Shirt Dress",
-        desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore eaque exercitationem commodi suscipit. Tempore quaerat sequi nemo repellat atque ipsam nam quas accusamus quisquam distinctio debitis omnis dicta, deserunt delectus.",
-        isNew: true,
-        oldPrice: 30,
-        price: 20,
-    },
-    {
-        id: 2,
-        img: "https://images.pexels.com/photos/3094472/pexels-photo-3094472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-        title: "Lace Blouse",
-        desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore eaque exercitationem commodi suscipit. Tempore quaerat sequi nemo repellat atque ipsam nam quas accusamus quisquam distinctio debitis omnis dicta, deserunt delectus.",
-        isNew: true,
-        oldPrice: 20,
-        price: 15,
-    },
-]
+
 const Cart = () => {
+
+    const products = useSelector((state) => state.cart.products)
+    const dispatch = useDispatch();
+
+    const totalPrice = () => {
+        let total = 0;
+        products.forEach((item) => { total += item.quantity * item.price; });
+        return total.toFixed(2);
+    }
+
+    const stripePromise = loadStripe('pk_live_51PHqOhRuQrwGxtycrJrZvmdOfT8NNC5JatQtUvjiCqP0hJKY5pGbg0d4uUB6CyGwhDdCCWp2V0sSNmRGkLc1u6r700jqZOJpuB');
+
+    const handlePayment = async () => {
+        try{
+            await stripePromise;
+            const stripe = await stripePromise;
+
+            const res = await makeRequest.post("/orders", {
+                products,
+            })  ;
+
+            await stripe.redirectToCheckout({
+                sessionId: res.data.stripeSession.id,
+            })          
+        } catch(err){
+            console.log('Error during payment:', err)
+        }
+    }
+
     return (
         <div className="cart">
             <h1>Items in your cart </h1>
-            {data.map(item => (
+            {products?.map((item) => (
                 <div className="item" key={item.id}>
-                    <img src={item.img} alt="" />
+                    <img src={import.meta.env.VITE_API_UPLOAD_URL + item.img} alt="" />
+
                     <div className="details">
                         <h1>{item.title}</h1>
                         <p>{item.desc?.substring(0, 100)}</p>
-                        <div className="price">1 X ${item.price}</div>
 
+                        <div className="price">{item.quantity} X ${item.price}</div>
                     </div>
-                    <DeleteIcon className='delete' />
+                    <DeleteIcon className='delete' onClick={() => dispatch(removeItem(item.id))} />
                 </div>
             ))}
             <div className="total">
                 <span>SUBTOTAL</span>
-                <span>$123</span>
+                <span>${totalPrice()}</span>
             </div>
-            <button>PROCEED TO CHECKOUT</button>
+            <button onClick={handlePayment}>PROCEED TO CHECKOUT</button>
         </div>
-    )
-}
+    );
+};
 
-export default Cart
+export default Cart;

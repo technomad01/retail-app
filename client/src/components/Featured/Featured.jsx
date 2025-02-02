@@ -1,36 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Cards from "../Cards/Cards";
-import axios from "axios";
-import.meta.env.VITE_API_URL;
-import.meta.env.VITE_API_TOKEN
 import "./featured.scss"
+import { useFetch } from '../../hooks/useFetch';
 
 
 const FeaturedProducts = ({ type }) => {
+    const { data, loading, error } = useFetch(`/products?populate=*&[filters][type][$eq]=${type}`
+    );
 
-    const [data, setData] = useState([]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await axios.get(
-                    `${import.meta.env.VITE_API_URL}/products?populate=*&[filters] [type] [$eq]=${type}`,
-                    {
-                        headers: {
-                            Authorization: `bearer ${import.meta.env.VITE_API_TOKEN}`,
-                        },
-                    }
-                );
-
-                setData(res.data.data)
-                // console.log(res)
-            } catch (err) {
-                console.log(err);
-            }
-        };
-        fetchData();
-    }, []);
-   
+    // console.log(data)
     return (
         <div className='featured'>
             <div className="top">
@@ -38,14 +16,13 @@ const FeaturedProducts = ({ type }) => {
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed numquam quaerat quia officia nostrum architecto rem natus eveniet distinctio ea, veniam placeat. Saepe ducimus est maxime temporibus. At, maiores ipsa!</p>
             </div>
             <div className='bottom'>
-                {data && data.length > 0 ? (
-                    data.map(item => <Cards item={item} key={item.id} />)
-                ) : (
-                    <p>Loading...</p>
-                )}
+                {error ? "Something went wrong!"
+                    : loading
+                        ? "loading"
+                        : data?.map((item) => <Cards item={item} key={item.id} />)}
             </div>
         </div>
     )
 }
 
-export default FeaturedProducts
+export default FeaturedProducts;

@@ -1,44 +1,80 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FavoriteBorder, ShoppingCart } from '@mui/icons-material';
 import "./product.scss"
+import { useFetch } from '../../hooks/useFetch'
+import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../redux/cartReducer';
+import.meta.env.VITE_API_URL
 
 
 const Product = () => {
+    const { id } = useParams();
+    const [selectImage, setSelectImage] = useState("img");
+    const [quantity, setQuantity] = useState(1);
+    const dispatch = useDispatch()
 
-    const [selectImage, setSelectImage] = useState(0)
-    const [quantity, setQuantity] = useState(0)
+    const { data, loading, error } = useFetch(`/products/${id}?populate=*`);
 
-    const images = [
-        "https://images.pexels.com/photos/4611700/pexels-photo-4611700.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-        "https://images.pexels.com/photos/1040945/pexels-photo-1040945.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-        "https://images.pexels.com/photos/1103833/pexels-photo-1103833.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-    ]
+    // console.log(import.meta.env.VITE_API_URL);
+    // console.log(data)
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error loading data</div>;
+
+    const getImageUrl = (imageData) => {
+        return imageData ? `${import.meta.env.VITE_API_UPLOAD_URL}${imageData.attributes.url}` : '';
+    };
 
     return (
         <div className='product'>
             <div className="left">
                 <div className="images">
-                    <img src={images[0]} alt="" onClick={(e) => setSelectImage(0)} />
+                    {data?.attributes?.img?.data && (
+                        <img
+                            src={getImageUrl(data.attributes.img.data)}
+                            alt=""
+                            onClick={() => setSelectImage('img')}
+                        />
+                    )}
 
-                    <img src={images[1]} alt="" onClick={(e) => setSelectImage(1)} />
-
-                    <img src={images[2]} alt="" onClick={(e) => setSelectImage(2)} />
+                    {data?.attributes?.img2?.data && (
+                        <img
+                            src={getImageUrl(data.attributes.img2.data)}
+                            alt=""
+                            onClick={() => setSelectImage('img2')}
+                        />
+                    )}
                 </div>
                 <div className="mainImg">
-                    <img src={images[selectImage]} alt="" />
+                    {data?.attributes[selectImage]?.data && (
+                        <img
+                            src={getImageUrl(data.attributes[selectImage].data)}
+                            alt=""
+                        />
+                    )}
                 </div>
             </div>
             <div className="right">
-                <h1>Brand</h1>
-                <span className='name'>Pant Suit</span>
-                <span className='price'>$199</span>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore eaque exercitationem commodi suscipit. Tempore quaerat sequi nemo repellat atque ipsam nam quas accusamus quisquam distinctio debitis omnis dicta, deserunt delectus.</p>
+                <h1>{data?.attributes?.title}</h1>
+                <span className='price'>${data?.attributes?.price}</span>
+                <p>{data?.attributes?.desc}</p>
+
                 <div className="quantity">
-                    <button onClick={() => setQuantity((prev) => prev === 1 ? 1 : prev - 1)} >-</button>
+                    <button onClick={() => setQuantity((prev) => prev === 1 ? 1 : prev - 1)} >
+                        -
+                    </button>
                     {quantity}
                     <button onClick={() => setQuantity((prev) => prev + 1)} >+</button>
                 </div>
-                <button className="add">
+                <button className="add" onClick={() => dispatch(addToCart({
+                    id: data.id,
+                    title: data.attributes.title,
+                    desc: data.attributes.desc,
+                    price: data.attributes.price,
+                    img: data.attributes.img.data.attributes.url,
+                    quantity,
+                }))}>
                     <ShoppingCart /> ADD TO CART
                 </button>
                 <div className="links">
@@ -61,4 +97,4 @@ const Product = () => {
     )
 }
 
-export default Product
+export default Product;
