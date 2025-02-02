@@ -2,7 +2,7 @@ Online Fashion Retail App
 A modern and dynamic e-commerce platform for all your fashion needs.
 
 Overview
-The Online Fashion Retail App is a full-stack e-commerce platform that provides a seamless shopping experience. It features dynamic product categories, secure payment integration, and streamlined product management to meet the needs of both customers and administrators.
+The Online Fashion Retail App is a full-stack e-commerce platform that provides a seamless shopping experience. It features dynamic product categories, secure payment integration, and streamlined product management to meet the needs of both customers and administrators
 
 Key Features
 Dynamic Product Categories: Browse through men’s and women’s fashion, accessories, and more, with intuitive navigation and filtering.
@@ -56,7 +56,6 @@ Start the Application:
 
 Backend:
 bash
-Copy code
 npm run server
 Frontend:
 bash
