@@ -13,11 +13,7 @@ const Product = () => {
     const [selectImage, setSelectImage] = useState("img");
     const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch()
-
     const { data, loading, error } = useFetch(`/products/${id}?populate=*`);
-
-    // console.log(import.meta.env.VITE_API_URL);
-    // console.log(data)
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error loading data</div>;
