@@ -1,4 +1,3 @@
-import React from 'react'
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -67,7 +66,6 @@ const Footer = () => {
                 </div>
                 <div className="right">
                     <img src={image} alt="" />
-
                 </div>
             </div>
         </div>
