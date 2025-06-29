@@ -13,7 +13,6 @@ const Product = () => {
     const [selectImage, setSelectImage] = useState("img");
     const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch()
-
     const { data, loading, error } = useFetch(`/products/${id}?populate=*`);
 
 
